@@ -8,10 +8,15 @@ RUN apt-get update -q && apt-get install -yq --no-install-recommends \
     curl \
     git \
     unzip \
+    wget \
+    rsync \
+    python \
+    sudo \
+    qemu-user-static \
     && rm -rf /var/lib/apt/lists/*
 
 # Clone Qtrpi and additional scripts
-RUN git clone https://github.com/rose-a/qtrpi.git -b docker-compatibility
+RUN git clone https://github.com/mishafarms/qtrpi.git -b docker-compatibility
 # we need this to be executable
 RUN chmod a+x qtrpi/docker/scripts/build.sh
 
