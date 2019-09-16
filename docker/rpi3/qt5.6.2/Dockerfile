@@ -12,10 +12,12 @@ RUN apt-get update -q && apt-get install -yq --no-install-recommends \
 
 # Clone Qtrpi and additional scripts
 RUN git clone https://github.com/rose-a/qtrpi.git -b docker-compatibility
+# we need this to be executable
+RUN chmod a+x qtrpi/docker/scripts/build.sh
 
 # Setup Qtrpi environment
-ENV QTRPI_QT_VERSION='5.6.2' \
-    QTRPI_TARGET_DEVICE='linux-rpi3-g++' \
+ENV QTRPI_QT_VERSION='5.9.8' \
+    QTRPI_TARGET_DEVICE='linux-rasp-pi3-g++' \
     QTRPI_TARGET_HOST='pi@localhost' \
     QTRPI_DOCKER='True'
 
@@ -23,7 +25,7 @@ ENV QTRPI_QT_VERSION='5.6.2' \
 WORKDIR /qtrpi
 
 # Execute init script and clean up after it
-RUN ./init-qtrpi-minimal.sh && \
+RUN ./init-qtrpi-full.sh && \
     rm /opt/qtrpi/*.zip && \
     rm -rf /opt/qtrpi/raspi/tools/.git && \
     rm -rf /opt/qtrpi/raspi/tools/arm-bcm2708/arm-* && \
